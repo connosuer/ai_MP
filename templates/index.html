@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">AI Model Marketplace</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <a href="{{ url_for('list_model_route') }}" class="btn btn-primary mb-3">List a New Model</a>
+        
+        <h2>Available Models</h2>
+        <div class="row">
+            {% for model in models %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ model.name }}</h5>
+                            <p class="card-text">{{ model.description }}</p>
+                            <p class="card-text">Price: {{ model.price / 1e18 }} ETH</p>
+                            <p class="card-text">Owner: {{ model.owner[:10] }}...</p>
+                            {% if model.isAvailable %}
+                                <form action="{{ url_for('purchase_model_route', model_id=model.id) }}" method="post">
+                                    <input type="text" name="from_address" placeholder="Your Ethereum Address" required class="form-control mb-2">
+                                    <button type="submit" class="btn btn-success">Purchase</button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-secondary" disabled>Sold</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
