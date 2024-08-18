@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List a New Model - AI Model Marketplace</title>
+    <title>Update Model - AI Model Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1>List a New Model</h1>
-        <form action="{{ url_for('marketplace.list_model') }}" method="post" enctype="multipart/form-data">
+        <h1>Update Model</h1>
+        <form method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Model Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="text" class="form-control" id="name" name="name" value="{{ model.name }}" required>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" name="description" required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3" required>{{ model.description }}</textarea>
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price (ETH)</label>
-                <input type="number" step="0.001" class="form-control" id="price" name="price" required>
+                <input type="number" step="0.001" class="form-control" id="price" name="price" value="{{ model.price / 1e18 }}" required>
             </div>
             <div class="mb-3">
-                <label for="model_file" class="form-label">Model File</label>
-                <input type="file" class="form-control" id="model_file" name="model_file" required>
+                <label for="model_file" class="form-label">New Model File (optional)</label>
+                <input type="file" class="form-control" id="model_file" name="model_file">
             </div>
-            <button type="submit" class="btn btn-primary">List Model</button>
+            <button type="submit" class="btn btn-primary">Update Model</button>
         </form>
         <a href="{{ url_for('marketplace.index') }}" class="btn btn-secondary mt-3">Back to Marketplace</a>
     </div>
