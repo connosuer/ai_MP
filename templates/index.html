@@ -31,7 +31,7 @@
                             <p class="card-text">Price: {{ model.price / 1e18 }} ETH</p>
                             <p class="card-text">Owner: {{ model.owner[:10] }}...</p>
                             {% if model.isAvailable %}
-                                <form action="{{ url_for('purchase_model_route', model_id=model.id) }}" method="post">
+                                <form action="{{ url_for('marketplace.purchase_model', model_id=model.id) }}" method="post">
                                     <input type="text" name="from_address" placeholder="Your Ethereum Address" required class="form-control mb-2">
                                     <button type="submit" class="btn btn-success">Purchase</button>
                                 </form>
