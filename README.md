@@ -3,7 +3,7 @@
 ## Overview
 AI Model Marketplace is a decentralized platform for buying and selling AI models. It leverages blockchain technology for secure transactions and IPFS for decentralized storage.
 
-**Note:** This project is currently under active development. While core functionalities are in place, some features may be incomplete or subject to change.
+**Note:** This project is currently under active development. While core functionalities are in place, some features may be incomplete or subject to change. Still a lacking and a little buggy.
 
 ## Features
 - List AI models for sale
@@ -32,7 +32,12 @@ AI Model Marketplace is a decentralized platform for buying and selling AI model
 
 3. Start Ganache for a local Ethereum blockchain.
 
-4. Deploy smart contracts (instructions in `contracts/README.md`).
+4. Compile and deploy the smart contract:
+   ```
+   python compile_contract.py
+   python deploy_contract.py
+   ```
+   Note: Make sure Ganache is running before deploying the contract.
 
 5. Start the Flask application:
    ```
@@ -46,6 +51,9 @@ AI Model Marketplace is a decentralized platform for buying and selling AI model
 - Local storage fallback when IPFS is unavailable
 - Smart contract integration for transactions (testing required)
 - User interface for listing and browsing models
+
+## Contributing
+We welcome contributions! Please see our `CONTRIBUTING.md` file for details on how to get started.
 
 ## License
 This project is licensed under the MIT License - see the `LICENSE` file for details.

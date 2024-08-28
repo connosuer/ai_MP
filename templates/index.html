@@ -28,16 +28,27 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ model.name }}</h5>
                             <p class="card-text">{{ model.description }}</p>
-                            <p class="card-text">Price: {{ model.price / 1e18 }} ETH</p>
+                            <p class="card-text">Price: {{ model.price }} ETH</p>
                             <p class="card-text">Owner: {{ model.owner[:10] }}...</p>
+                            <p class="card-text">Rating: {{ model.rating }}/5</p>
                             {% if model.isAvailable %}
                                 <form action="{{ url_for('marketplace.purchase_model', model_id=model.id) }}" method="post">
-                                    <input type="text" name="from_address" placeholder="Your Ethereum Address" required class="form-control mb-2">
                                     <button type="submit" class="btn btn-success">Purchase</button>
                                 </form>
                             {% else %}
                                 <button class="btn btn-secondary" disabled>Sold</button>
                             {% endif %}
+                            <form action="{{ url_for('marketplace.rate_model', model_id=model.id) }}" method="post" class="mt-2">
+                                <select name="rating" class="form-select mb-2" required>
+                                    <option value="">Rate this model</option>
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Stars</option>
+                                    <option value="3">3 Stars</option>
+                                    <option value="4">4 Stars</option>
+                                    <option value="5">5 Stars</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Submit Rating</button>
+                            </form>
                         </div>
                     </div>
                 </div>
