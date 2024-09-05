@@ -52,8 +52,3 @@ AI Model Marketplace is a decentralized platform for buying and selling AI model
 - Smart contract integration for transactions (testing required)
 - User interface for listing and browsing models
 
-## Contributing
-We welcome contributions! Please see our `CONTRIBUTING.md` file for details on how to get started.
-
-## License
-This project is licensed under the MIT License - see the `LICENSE` file for details.
