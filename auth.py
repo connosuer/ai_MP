@@ -8,29 +8,34 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        ethereum_address = request.form['ethereum_address']
-        bio = request.form['bio']
-        
-        user = User.query.filter_by(username=username).first()
-        if user:
-            flash('Username already exists.', 'error')
-            return redirect(url_for('auth.register'))
-        
-        user = User.query.filter_by(email=email).first()
-        if user:
-            flash('Email already exists.', 'error')
-            return redirect(url_for('auth.register'))
-        
-        new_user = User(username=username, email=email, ethereum_address=ethereum_address, bio=bio)
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
-        
-        flash('Registration successful. Please log in.', 'success')
-        return redirect(url_for('auth.login'))
+        try:
+            username = request.form['username']
+            email = request.form['email']
+            password = request.form['password']
+            ethereum_address = request.form['ethereum_address']
+            bio = request.form.get('bio', '')  # Bio is optional
+            
+            user = User.query.filter_by(username=username).first()
+            if user:
+                flash('Username already exists.', 'error')
+                return redirect(url_for('auth.register'))
+            
+            user = User.query.filter_by(email=email).first()
+            if user:
+                flash('Email already exists.', 'error')
+                return redirect(url_for('auth.register'))
+            
+            new_user = User(username=username, email=email, ethereum_address=ethereum_address, bio=bio)
+            new_user.set_password(password)
+            db.session.add(new_user)
+            db.session.commit()
+            
+            flash('Registration successful. Please log in.', 'success')
+            return redirect(url_for('auth.login'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'An error occurred: {str(e)}', 'error')
+            print(f"Registration error: {str(e)}")  # For server-side logging
     return render_template('register.html')
 
 @auth_bp.route('/login', methods=['GET', 'POST'])

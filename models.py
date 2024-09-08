@@ -10,7 +10,7 @@ class User(db.Model):
     reputation_score = db.Column(db.Float, default=0.0)
     bio = db.Column(db.Text)
     joined_date = db.Column(db.DateTime, default=db.func.current_timestamp())
-    
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
 
@@ -28,6 +28,6 @@ class Model(db.Model):
     is_available = db.Column(db.Boolean, default=True)
     average_rating = db.Column(db.Float, default=0.0)
     total_ratings = db.Column(db.Integer, default=0)
-    
+
     def __repr__(self):
         return f'<Model {self.name}>'
