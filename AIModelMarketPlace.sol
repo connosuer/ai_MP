@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract AIModelMarketplace {
@@ -8,7 +7,7 @@ contract AIModelMarketplace {
         address payable owner;
         uint256 price;
         bool isAvailable;
-        string fileHash;
+        string ipfsHash;
         uint256 totalRating;
         uint256 ratingCount;
     }
@@ -18,12 +17,11 @@ contract AIModelMarketplace {
 
     event ModelListed(uint256 indexed modelId, address indexed owner, string name, uint256 price);
     event ModelPurchased(uint256 indexed modelId, address indexed buyer, address indexed seller, uint256 price);
-    event ModelUpdated(uint256 indexed modelId, string name, string description, uint256 price);
     event ModelRated(uint256 indexed modelId, address indexed rater, uint256 rating);
 
-    function listModel(string memory _name, string memory _description, uint256 _price, string memory _fileHash) public {
+    function listModel(string memory _name, string memory _description, uint256 _price, string memory _ipfsHash) public {
         modelCount++;
-        models[modelCount] = Model(_name, _description, payable(msg.sender), _price, true, _fileHash, 0, 0);
+        models[modelCount] = Model(_name, _description, payable(msg.sender), _price, true, _ipfsHash, 0, 0);
         emit ModelListed(modelCount, msg.sender, _name, _price);
     }
 
@@ -38,17 +36,6 @@ contract AIModelMarketplace {
         emit ModelPurchased(_modelId, msg.sender, model.owner, msg.value);
     }
 
-    function updateModel(uint256 _modelId, string memory _name, string memory _description, uint256 _price) public {
-        Model storage model = models[_modelId];
-        require(msg.sender == model.owner, "Only the owner can update the model");
-
-        model.name = _name;
-        model.description = _description;
-        model.price = _price;
-
-        emit ModelUpdated(_modelId, _name, _description, _price);
-    }
-
     function rateModel(uint256 _modelId, uint256 _rating) public {
         require(_rating >= 1 && _rating <= 5, "Rating must be between 1 and 5");
         Model storage model = models[_modelId];
@@ -59,7 +46,7 @@ contract AIModelMarketplace {
 
     function getModel(uint256 _modelId) public view returns (string memory, string memory, address, uint256, bool, string memory) {
         Model storage model = models[_modelId];
-        return (model.name, model.description, model.owner, model.price, model.isAvailable, model.fileHash);
+        return (model.name, model.description, model.owner, model.price, model.isAvailable, model.ipfsHash);
     }
 
     function getModelRating(uint256 _modelId) public view returns (uint256) {

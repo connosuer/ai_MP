@@ -1,14 +1,10 @@
 from flask import Flask
-from config import Config
-from extensions import db, init_db
 from auth import auth_bp
 from marketplace import marketplace_bp
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object(Config)
-    
-    init_db(app)
+    app.config['SECRET_KEY'] = 'your-secret-key'  # Change this to a random secret key
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(marketplace_bp)

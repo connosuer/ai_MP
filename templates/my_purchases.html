@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Purchased Models - AI Model Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>My Purchased Models</h1>
+        {% if models %}
+            <div class="row">
+                {% for model in models %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ model.name }}</h5>
+                                <p class="card-text">{{ model.description }}</p>
+                                <p class="card-text">Price: {{ model.price }} ETH</p>
+                                <a href="{{ url_for('marketplace.download_model', model_id=model.id) }}" class="btn btn-primary">Download</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You haven't purchased any models yet.</p>
+        {% endif %}
+        <a href="{{ url_for('marketplace.index') }}" class="btn btn-secondary">Back to Marketplace</a>
+    </div>
+</body>
+</html>
