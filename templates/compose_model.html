@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compose AI Model - AI Model Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Compose AI Model</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="composition_name" class="form-label">Composition Name</label>
+                <input type="text" class="form-control" id="composition_name" name="composition_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="composition_description" class="form-label">Composition Description</label>
+                <textarea class="form-control" id="composition_description" name="composition_description" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Select Models to Compose</label>
+                {% for model in available_models %}
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{ model.id }}" id="model{{ model.id }}" name="model_ids">
+                    <label class="form-check-label" for="model{{ model.id }}">
+                        {{ model.name }} - {{ model.description }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Create Composition</button>
+        </form>
+        <a href="{{ url_for('marketplace.index') }}" class="btn btn-secondary mt-3">Back to Marketplace</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

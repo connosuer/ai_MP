@@ -4,15 +4,14 @@ import json
 # Install specific Solidity version
 install_solc("0.8.0")
 
-# Read the Solidity contract file
-with open("AIModelMarketplace.sol", "r") as file:
+with open("AIModelMarketPlace.sol", "r") as file:
     contract_source_code = file.read()
 
 # Compile the contract
 compiled_sol = compile_standard({
     "language": "Solidity",
     "sources": {
-        "AIModelMarketplace.sol": {
+        "AIModelMarketPlace.sol": {
             "content": contract_source_code
         }
     },
@@ -25,11 +24,15 @@ compiled_sol = compile_standard({
     }
 }, solc_version="0.8.0")
 
-# Extract the contract ABI
-abi = compiled_sol["contracts"]["AIModelMarketplace.sol"]["AIModelMarketplace"]["abi"]
+# Extract the contract data
+contract_data = compiled_sol['contracts']['AIModelMarketPlace.sol']['AIModelMarketplace']
 
-# Save the ABI to a file
+# Save the ABI
 with open("contract_abi.json", "w") as file:
-    json.dump(abi, file)
+    json.dump(contract_data["abi"], file)
 
-print("Contract compiled successfully. ABI saved to contract_abi.json")
+# Save the bytecode
+with open("contract_bytecode.json", "w") as file:
+    json.dump(contract_data["evm"]["bytecode"]["object"], file)
+
+print("Contract compiled successfully. ABI and bytecode saved.")

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Compositions - AI Model Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Model Compositions</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Creator</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for composition in compositions %}
+                <tr>
+                    <td>{{ composition.id }}</td>
+                    <td>{{ composition.name }}</td>
+                    <td>{{ composition.description }}</td>
+                    <td>{{ composition.creator }}</td>
+                    <td>
+                        <a href="{{ url_for('composition.execute_composition_route', composition_id=composition.id) }}" class="btn btn-primary btn-sm">Execute</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('marketplace.index') }}" class="btn btn-secondary">Back to Marketplace</a>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
